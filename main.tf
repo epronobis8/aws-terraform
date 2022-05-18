@@ -1,6 +1,17 @@
 # Configure the AWS Provider
 provider "aws" {
-  region = "us-east-1"
+  #prompts user for the region
+  region = var.aws_region
+  /* MULTI-LINE COMMENT
+  example how to use path/profile for aws keys
+  shared_credentials_file = "/users/erin/.aws/creds"
+  profile = "personalaws"
+  */
+}
+locals {
+  #you can add locals and reference them throughout such as tags and resource names
+  owner   = "Erin"
+  version = "v1.0"
 }
 #Retrieve the list of AZs in the current AWS region
 data "aws_availability_zones" "available" {}
@@ -10,8 +21,9 @@ resource "aws_vpc" "vpc" {
   cidr_block = var.vpc_cidr
   tags = {
     Name        = var.vpc_name
-    Environment = "demo_environment"
+    Environment = "terraform_demo_environment-${local.version}"
     Terraform   = "true"
+    Owner       = local.owner
   }
 }
 #Deploy the private subnets

@@ -1,10 +1,10 @@
 variable "aws_region" {
-  type    = string
-  default = "us-east-1"
+  type = string
+  #prompts user for the region
 }
 variable "vpc_name" {
   type    = string
-  default = "demo_vpc"
+  default = "terraform_demo_vpc"
 }
 variable "vpc_cidr" {
   type    = string
